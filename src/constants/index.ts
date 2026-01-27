@@ -1,3 +1,26 @@
+import type {
+  NavLink,
+} from "../types"
+
+export const navLinks: NavLink[] = [
+  {
+    name: "Work",
+    link: "#work"
+  },
+  {
+    name: "Experience",
+    link: "#experience",
+  },
+  {
+    name: "Skills",
+    link: "#skills",
+  },
+  {
+    name: "Testimonials",
+    link: "#testimonials",
+  },
+]
+
 // Profile Information
 export const profileInfo = {
   name: "Praise Daniels",

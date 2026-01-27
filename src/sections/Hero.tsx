@@ -1,24 +1,47 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { profileInfo } from "../constants";
-
+import Button from "@/components/Button";
 const roles = [
 	"FullStack Developer",
 	"React Specialist",
 	"Mobile App Builder",
+	"Automation Engineer",
+	"Web Scraping Specialist",
+	"Apify Actor Developer",
+	"CRM & Workflow Builder",
 	"Problem Solver",
 ];
 
 const Hero = () => {
+
+	const ITEM_HEIGHT_REM = 2; // each <p> is h-8 = 2rem
+	const rolesLoop = [...roles, roles[0]]; // clone first role at end
+
 	const [currentRole, setCurrentRole] = useState(0);
+	const [isResetting, setIsResetting] = useState<boolean>(false);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setCurrentRole((prev) => (prev + 1) % roles.length);
+			setCurrentRole((prev) => (prev + 1));
 		}, 3000);
 		return () => clearInterval(interval);
 	})
+
+	const handleTransitionEnd = () => {
+		// if we've reached the cloned last item, jump back to the real first item
+		if (currentRole === roles.length) {
+			setIsResetting(true);     // temporarily disable transition
+    setCurrentRole(0);        // jump to the real first
+		}
+	}
+
+	useEffect(() => {
+		if (!isResetting) return;
+		const id = requestAnimationFrame(() => setIsResetting(false));
+		return () => cancelAnimationFrame(id);
+	}, [isResetting])
 
 	useGSAP(() => {
 		gsap.fromTo(".hero-animate",
@@ -44,6 +67,46 @@ const Hero = () => {
 							<span>Available for opportunities</span>
 						</div>
 					</div>
+
+
+					<div className="hero-text mt-6">
+						<h1 className="hero-animate">
+							Hi, I'm{" "}
+							<span className="text-gradient">{profileInfo.name.split(" ")[0]}</span>
+						</h1>
+						<h1 className="hero-animate mt-2">
+							I design and build scalable apps for
+						</h1>
+						<h1 className="hero-animate mt-1">
+							the <span className="text-primary">web & mobile</span>
+						</h1>
+					</div>
+
+					{/*Animated role */}
+					<div className="hero-animate mt-6 h-8 overflow-hidden">
+						<div
+							onTransitionEnd={handleTransitionEnd}
+							className={isResetting?"" : "transition-transform duration-500 ease-out"}
+							style={{ transform: `translateY(-${currentRole * ITEM_HEIGHT_REM}rem)` }}
+						>
+							{rolesLoop.map((role, i) => (
+								<p key={i} className="h-8 text-lg md:text-xl text-primary font-medium">
+									{role}
+								</p>
+							))}
+						</div>
+					</div>
+
+					<p className="hero-animate text-text-secondary text-lg md:text-xl leading-relaxed mt-6 max-w-xl">
+						{profileInfo.title} based in {profileInfo.location}.<br />
+						I build scalable applications with great user experiences.
+					</p>
+
+					<Button
+              text="See My Work"
+              className="md:w-80 md:h-16 w-60 h-12"
+              id="counter"
+            />
 				</div>
 
 			</div>
