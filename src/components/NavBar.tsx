@@ -24,9 +24,9 @@ const Navbar = () => {
     }
   }
 
-  return(
+  return (
     <header className={`navbar ${scrolled ? "scrolled" : "not-scrolled"}`}>
-      <div className="inner">
+      <div className="inner lg:ml-20">
         {/* Logo */}
         <a href="#hero" className="logo group">
           <span className="text-gradient">{profileInfo.name}</span>
@@ -38,12 +38,12 @@ const Navbar = () => {
           <ul>
             {navLinks.map((item) => (
               <li key={item.name}>
-                <a 
-                href="item.link"
-                onClick={(e) => handleNavClick(e, item.link)}
+                <a
+                  href="item.link"
+                  onClick={(e) => handleNavClick(e, item.link)}
                 >
                   {item.name}
-                </a> 
+                </a>
               </li>
             ))}
           </ul>
@@ -51,17 +51,19 @@ const Navbar = () => {
 
 
         {/* CTA Button */}
-        <a 
-        href="#contact"
-        onClick={(e) => handleNavClick(e, "#contact")}
-        className="contact-btn"
+        <a
+          href="#contact"
+          onClick={(e) => handleNavClick(e, "#contact")}
+          className="contact-btn"
         >
-          <div className="inner">Let's Talk</div>
+          <div className="inner">Get in Touch</div>
         </a>
+
+
 
         {/* Mobile menu button */}
         <button
-        className="lg:hidden text-white p-2 hover:text-primary transition-colors"
+          className="lg:hidden text-white p-2 hover:text-primary transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -81,24 +83,24 @@ const Navbar = () => {
         <div className="lg:hidden absolute top-full left-0 w-full bg-surface/95 backdrop-blur-xl border-b border-border">
           <nav className="px-5 py-6">
             <ul className="flex flex-col gap-4">
-            {navLinks.map((item) => (
-              <li key={item.name}>
-                <a 
-                href={item.link}
-                onClick={(e) => handleNavClick(e, item.link)}
-                className="block py-2 text-text-secondary hover:text-primary transition-colors"
-                >
-                  {item.name}
-                </a>
-              </li>
-            ))}
+              {navLinks.map((item) => (
+                <li key={item.name}>
+                  <a
+                    href={item.link}
+                    onClick={(e) => handleNavClick(e, item.link)}
+                    className="block py-2 text-text-secondary hover:text-primary transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
               <li className="pt-4 border-t border-border">
                 <a
                   href="#contact"
                   onClick={(e) => handleNavClick(e, "#contact")}
                   className="block py-3 px-6 bg-primary text-surface rounded-full text-center font-semibold"
                 >
-                  Let's Talk
+                  Get in Touch
                 </a>
               </li>
             </ul>

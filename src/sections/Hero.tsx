@@ -3,6 +3,9 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { profileInfo } from "../constants";
 import Button from "@/components/Button";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import HeroExperience from "@/components/models/hero_models/HeroExperience";
+import AnimatedCounter from "@/components/AnimatedCounter";
 const roles = [
 	"FullStack Developer",
 	"React Specialist",
@@ -27,15 +30,27 @@ const Hero = () => {
 			setCurrentRole((prev) => (prev + 1));
 		}, 3000);
 		return () => clearInterval(interval);
-	})
+	}, [])
 
 	const handleTransitionEnd = () => {
 		// if we've reached the cloned last item, jump back to the real first item
 		if (currentRole === roles.length) {
 			setIsResetting(true);     // temporarily disable transition
-    setCurrentRole(0);        // jump to the real first
+			setCurrentRole(0);        // jump to the real first
 		}
 	}
+
+	useEffect(() => {
+		const onVisibilityChange = () => {
+			if (document.visibilityState === "visible") {
+				setIsResetting(true);
+				setCurrentRole((prev) => (prev >= roles.length ? 0 : prev));
+			}
+		};
+
+		document.addEventListener("visibilitychange", onVisibilityChange);
+		return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+	}, []);
 
 	useEffect(() => {
 		if (!isResetting) return;
@@ -50,7 +65,7 @@ const Hero = () => {
 	})
 
 	return (
-		<section id="hero" className="relative overflow-hidden bg-grid-pattern">
+		<section id="hero" className="relative overflow-hidden bg-grid-pattern min-h-screen">
 
 			<div className="absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
 			{/* Decorative blurs */}
@@ -60,9 +75,9 @@ const Hero = () => {
 			<div className="hero-layout">
 
 				{/* Left Content */}
-				<div className="flex-1 max-w-2xl">
+				<div className="flex-1 max-w-2xl lg:max-w-lg xl:max-w-xl lg:-ml-20">
 					<div className="hero-animate">
-						<div className="hero-badge">
+						<div className="hero-badge relative -top-6">
 							<span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
 							<span>Available for opportunities</span>
 						</div>
@@ -86,11 +101,11 @@ const Hero = () => {
 					<div className="hero-animate mt-6 h-8 overflow-hidden">
 						<div
 							onTransitionEnd={handleTransitionEnd}
-							className={isResetting?"" : "transition-transform duration-500 ease-out"}
+							className={isResetting ? "" : "transition-transform duration-500 ease-out"}
 							style={{ transform: `translateY(-${currentRole * ITEM_HEIGHT_REM}rem)` }}
 						>
 							{rolesLoop.map((role, i) => (
-								<p key={i} className="h-8 text-lg md:text-xl text-primary font-medium">
+								<p key={`${role}-${i}`} className="h-8 text-lg md:text-xl text-primary font-medium">
 									{role}
 								</p>
 							))}
@@ -102,18 +117,45 @@ const Hero = () => {
 						I build scalable applications with great user experiences.
 					</p>
 
-					<Button
-              text="See My Work"
-              className="md:w-80 md:h-16 w-60 h-12"
-              id="counter"
-            />
+					<div className="hero-animate flex flex-wrap gap-4 mt-8">
+						<Button
+							text="See My Work"
+							className="md:w-80 md:h-16 w-60 h-12"
+							id="counter"
+						/>
+					</div>
 				</div>
 
+				{/* Right - 3D Photo Gallery */}
+				<div className="flex-1 w-full max-w-md lg:max-w-lg xl:max-w-xl h-[400px] md:h-[500px] relative md:translate-x-15 lg:translate-x-30">
+					<ErrorBoundary
+						fallback={
+							<div className="w-full h-full flex-center rounded-3xl bg-gradient-to-br from-surface-light to-surface-elevated border border-border overflow-hidden">
+								<div className="relative">
+									<img
+										src="/images/profile-professional.jpg"
+										alt="Praise Daniels"
+										className="w-48 h-60 object-cover rounded-xl border-2 border-primary shadow-2xl"
+									/>
+									<div className="absolute -bottom-2 -right-2 w-12 h-12 bg-primary rounded-full flex-center text-surface text-xl">
+										👨‍💻
+									</div>
+								</div>
+							</div>
+						}
+					>
+						<HeroExperience />
+					</ErrorBoundary>
+				</div>
+
+
+
+
 			</div>
+
+			<AnimatedCounter />
 		</section>
 	)
 }
 
 export default Hero;
-
-
