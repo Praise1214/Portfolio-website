@@ -90,7 +90,7 @@ const ShowcaseSection = () => {
       {/* Background accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-5 md:px-2">
+      <div className="max-w-[1290px] mx-auto px-5 md:px-2">
 
 
         {/* Projects Grid - 2x2 */}
