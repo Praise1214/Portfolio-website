@@ -28,6 +28,26 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Space Grotesk", sans-serif;
 }
 
+/* Section Header Styles */
+.section-header {
+  @apply flex flex-col items-center text-center;
+}
+ 
+.section-header h2 {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold mt-4;
+  font-family: "Space Grotesk", sans-serif;
+}
+ 
+.section-badge {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm md:text-base
+         bg-surface-light border border-border text-text-secondary;
+}
+
+.section-badge-icon {
+  @apply text-lg md:text-xl;
+  line-height: 1;
+}
+
 section {
   width: 100dvw;
 }
@@ -285,86 +305,142 @@ section {
     }
   }
 
-  /* Tech Stack - New card style */
+/* Tech Stack Grid - Reference Style */
   .tech-grid {
-    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mt-16;
+    @apply grid xl:grid-cols-5 md:grid-cols-3 grid-cols-1 xl:gap-16 md:gap-10 gap-5 mt-16;
   }
 
   .tech-card {
-    @apply relative p-6 rounded-2xl bg-surface-light border border-border
-           hover:border-primary transition-all duration-500 cursor-pointer;
-    
-    &:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.1);
-    }
+    @apply relative overflow-hidden;
   }
 
   .tech-card-animated-bg {
-    @apply absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0
-           group-hover:opacity-100 transition-opacity duration-500 rounded-2xl;
+    @apply absolute left-0 bottom-[-100%] w-full h-full bg-surface-elevated
+           group-hover:bottom-0 transition-all duration-700;
   }
 
   .tech-card-content {
-    @apply relative z-10 flex flex-col items-center gap-4;
-    
-    p {
-      @apply text-sm md:text-base font-medium text-text-secondary text-center
-             group-hover:text-primary transition-colors duration-300;
-    }
+    @apply flex flex-col md:justify-center items-center xl:gap-5 xl:h-[50vh]
+           overflow-hidden relative z-10 group-hover:cursor-grab;
+  }
+
+  .tech-card-content p {
+    @apply text-lg 2xl:text-2xl pb-5 xl:pb-0 font-semibold text-text-secondary text-center;
   }
 
   .tech-icon-wrapper {
-    @apply w-full h-32 md:h-40 flex justify-center items-center;
+    @apply flex justify-center items-center w-52 h-60 relative;
   }
 
-  /* Experience Timeline - New style */
+  /* Experience Timeline - Blends with site design */
+  .exp-item {
+    @apply relative;
+  }
+
+  .exp-item:not(:last-child) {
+    @apply pb-12 md:pb-16;
+  }
+
   .exp-card-wrapper {
-    @apply relative flex flex-col lg:flex-row gap-8 mb-16;
+    @apply flex flex-col xl:flex-row gap-8 xl:gap-16;
   }
 
-  .timeline-wrapper {
-    @apply hidden lg:flex absolute left-1/2 top-0 bottom-0 -translate-x-1/2 flex-col items-center;
+  /* Timeline container - holds logo and line together */
+  .timeline-container {
+    @apply flex flex-col items-center flex-shrink-0;
+    position: relative;
+    align-self: stretch; /* Stretch to full height of flex parent */
   }
 
-  .timeline {
-    @apply w-px h-full bg-gradient-to-b from-primary via-primary/50 to-transparent;
-  }
-
+  /* Logo wrapper - contains SVG border and image */
   .timeline-logo {
-    @apply w-12 h-12 rounded-full bg-surface-light border-2 border-primary flex justify-center items-center
-           shadow-lg shadow-primary/20;
-    
-    img {
-      @apply w-6 h-6 object-contain;
+    @apply w-14 h-14 flex-shrink-0 relative z-10;
+  }
+
+  /* SVG circle that draws in */
+  .logo-circle-svg {
+    @apply absolute inset-0 w-full h-full;
+    transform: rotate(-90deg); /* Start from top */
+  }
+
+  .logo-circle-border {
+    stroke: var(--primary);
+    stroke-linecap: round;
+  }
+
+  /* Logo image inside the circle */
+  .logo-image {
+    @apply absolute inset-1 rounded-full overflow-hidden bg-surface-light;
+  }
+
+  .logo-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  /* Timeline line - spans from bottom of logo circle to top of next logo circle */
+  .timeline-line {
+    @apply w-0.5;
+    position: absolute;
+    top: 56px; /* Start from bottom of logo (56px height) */
+    left: 50%;
+    transform: translateX(-50%);
+    /*
+      Height calculation:
+      - From bottom of current logo to top of next logo
+      - = padding-bottom between items (3rem mobile, 4rem desktop)
+    */
+    height: calc(100% + 3rem - 56px); /* Container height + padding - logo height */
+    background: linear-gradient(
+      180deg,
+      var(--primary) 0%,
+      var(--primary-light) 50%,
+      var(--primary) 100%
+    );
+    transform-origin: top center; /* Grows from bottom of logo downward */
+    z-index: 5; /* Behind the logo circles */
+  }
+
+  @media (min-width: 768px) {
+    .timeline-line {
+      height: calc(100% + 4rem - 56px);
     }
   }
 
-  .gradient-line {
-    @apply hidden;
+  /* Last item line - extends downward */
+  .exp-item:last-child .timeline-line {
+    height: 140px; /* Fixed height for last item */
   }
 
-  .expText {
-    @apply flex-1 lg:w-1/2 lg:pr-16 lg:even:pl-16 lg:even:pr-0 lg:even:text-right;
-    
-    h1 {
-      @apply text-2xl md:text-3xl font-bold mb-2;
-      font-family: "Space Grotesk", sans-serif;
-    }
-    
-    ul {
-      @apply space-y-3 mt-6 text-text-secondary;
-      
-      li {
-        @apply flex items-start gap-3;
-        
-        &::before {
-          content: '→';
-          @apply text-primary font-bold;
-        }
-      }
-    }
+  .exp-content {
+    @apply flex-1 pt-0;
   }
+
+  .exp-content h1 {
+    @apply text-2xl md:text-3xl font-bold mb-2;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .exp-content .exp-date {
+    @apply text-text-secondary text-sm md:text-base mb-4 flex items-center gap-2;
+  }
+
+  .exp-content .exp-responsibilities-label {
+    @apply text-primary/80 text-sm font-medium uppercase tracking-wider mb-3;
+  }
+
+  .exp-content ul {
+    @apply space-y-3;
+  }
+
+  .exp-content ul li {
+    @apply text-text-secondary text-base leading-relaxed pl-4 relative;
+  }
+
+  .exp-content ul li::before {
+    content: "";
+    @apply absolute left-0 top-2.5 w-1.5 h-1.5 rounded-full bg-primary;
+  }
+
 
   /* Testimonials - New masonry */
   .testimonials-grid {
@@ -374,6 +450,23 @@ section {
   .timeline-card {
     @apply break-inside-avoid mb-6 p-6 md:p-8 rounded-2xl bg-surface-light border border-border
            hover:border-primary/30 transition-all duration-300;
+  }
+
+  .review-header {
+    @apply flex items-center justify-between gap-3 mb-4;
+  }
+
+  .review-children {
+    @apply relative;
+  }
+
+  .review-badge {
+    @apply absolute bottom-3 right-3 w-8 h-8 md:w-9 md:h-9 rounded-full bg-surface-elevated/90
+           border border-border flex items-center justify-center overflow-hidden;
+  }
+
+  .review-badge img {
+    @apply w-full h-full object-cover;
   }
 
   /* Contact Form - New style */
