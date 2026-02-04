@@ -1,6 +1,6 @@
 import React, { Suspense, useRef, useState, useEffect } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { Float, useTexture } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float } from "@react-three/drei";
 import * as THREE from "three";
 import type { TechStackIcon } from "../../../types";
  
@@ -37,10 +37,9 @@ const getLogoUrl = (name: string): string => {
 // 3D Logo component that displays the actual logo as a texture on a plane
 interface LogoMeshProps {
   url: string;
-  name: string;
 }
- 
-const LogoMesh: React.FC<LogoMeshProps> = ({ url, name }) => {
+
+const LogoMesh: React.FC<LogoMeshProps> = ({ url }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
  
@@ -117,7 +116,7 @@ const TechModel: React.FC<TechModelProps> = ({ name }) => {
  
   return (
     <Float speed={2} rotationIntensity={0.3} floatIntensity={0.5}>
-      <LogoMesh url={logoUrl} name={name} />
+      <LogoMesh url={logoUrl} />
     </Float>
   );
 };

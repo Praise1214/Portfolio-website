@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import TitleHeader from "../components/TitleHeader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,7 +59,7 @@ const ShowcaseSection = () => {
       { opacity: 1, duration: 1 }
     );
 
-    projectRefs.current.forEach((card, index) => {
+    projectRefs.current.forEach((card) => {
       if (!card) return;
 
       gsap.fromTo(
