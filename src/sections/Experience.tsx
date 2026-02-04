@@ -172,7 +172,10 @@ const Experience = () => {
   );
 
   return (
-    <section id="experience" className="py-20 md:py-32 px-5 md:px-10 xl:px-20">
+    <section
+      id="experience"
+      className="pt-6 md:pt-10 pb-20 md:pb-28 px-5 md:px-10 xl:px-20"
+    >
       <div className="max-w-7xl mx-auto" ref={containerRef}>
         <TitleHeader
           title="Professional Work Experience"

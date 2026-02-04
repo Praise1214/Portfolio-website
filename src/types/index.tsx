@@ -8,3 +8,11 @@ export interface TitleHeaderProps {
   title: string;
   sub: string;
 }
+
+// Tech Stack
+export interface TechStackIcon {
+  name: string;
+  modelPath: string;
+  scale: number;
+  rotation: [number, number, number];
+}
