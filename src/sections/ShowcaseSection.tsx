@@ -13,7 +13,7 @@ const projects = [
     description:
       "A digital platform for purchasing CO2 offsets and creating official carbon offset certificates.",
     image: "/images/project-tranxcarbon.png",
-    tags: ["React", "Node.js", "PostgreSQL"],
+    tags: ["React", "Node.js", "PostgreSQL", "ExpressJs"],
     link: "https://www.tranxcarbon.com/",
   },
   {
@@ -28,12 +28,12 @@ const projects = [
   },
   {
     id: 3,
-    title: "Amazon Scraper",
-    subtitle: "E-commerce Data Extraction",
+    title: "Amazon Website Copy",
+    subtitle: "E-commerce Website",
     description:
       "Automated product data extraction tool for market research and price monitoring.",
     image: "/images/project-amazon.png",
-    tags: ["Apify", "Node.js", "Automation"],
+    tags: ["Javascript", "Node.js", "Automation"],
     link: "https://javascript-amazon-project-sage.vercel.app",
   },
   {
@@ -43,7 +43,7 @@ const projects = [
     description:
       "A modern job listing platform connecting employers with talented candidates.",
     image: "/images/project-jobboard.png",
-    tags: ["React", "TypeScript", "REST API"],
+    tags: ["NextJs", "TypeScript", "PostgreSQL", "Prisma"],
     link: "https://job-posting-website-429g.vercel.app/",
   },
 ];

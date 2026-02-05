@@ -67,11 +67,13 @@ const GlowCard = ({ card, index, children }: GlowCardProps) => {
 
       {/* Children (Image) */}
       <div className="review-children">
-        {children}
         {card.logo && (
           <div className="review-badge" aria-hidden="true">
-            <img src={card.logo} alt="" />
+            <img src={card.logo} alt={card.company ?? ""} />
           </div>
+        )}
+        {card.company && (
+          <span className="review-company-name">{card.company}</span>
         )}
       </div>
     </div>

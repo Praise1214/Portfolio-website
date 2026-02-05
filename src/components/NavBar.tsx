@@ -14,8 +14,15 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>,
-    link: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: string
+  ) => {
+    if (!link.startsWith("#")) {
+      setMobileMenuOpen(false);
+      return;
+    }
+
     e.preventDefault();
     const element = document.querySelector(link);
     if (element) {
@@ -39,8 +46,10 @@ const Navbar = () => {
             {navLinks.map((item) => (
               <li key={item.name}>
                 <a
-                  href="item.link"
+                  href={item.link}
                   onClick={(e) => handleNavClick(e, item.link)}
+                  target={!item.link.startsWith("#") ? "_blank" : undefined}
+                  rel={!item.link.startsWith("#") ? "noopener noreferrer" : undefined}
                 >
                   {item.name}
                 </a>
@@ -89,6 +98,8 @@ const Navbar = () => {
                     href={item.link}
                     onClick={(e) => handleNavClick(e, item.link)}
                     className="block py-2 text-text-secondary hover:text-primary transition-colors"
+                    target={!item.link.startsWith("#") ? "_blank" : undefined}
+                    rel={!item.link.startsWith("#") ? "noopener noreferrer" : undefined}
                   >
                     {item.name}
                   </a>
@@ -113,4 +124,3 @@ const Navbar = () => {
 }
 
 export default Navbar;
-

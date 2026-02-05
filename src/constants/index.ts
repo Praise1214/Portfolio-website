@@ -17,8 +17,8 @@ export const navLinks: NavLink[] = [
     link: "#skills",
   },
   {
-    name: "Testimonials",
-    link: "#testimonials",
+    name: "Resume",
+    link: "/resume.html",
   },
 ]
 
@@ -54,4 +54,3 @@ export const socialImgs: SocialImg[] = [
     url: "https://x.com/T1CT4CK",
   },
 ];
-

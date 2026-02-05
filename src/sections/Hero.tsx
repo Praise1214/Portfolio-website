@@ -127,7 +127,7 @@ const Hero = () => {
 				</div>
 
 				{/* Right - 3D Photo Gallery */}
-				<div className="flex-1 w-full max-w-md lg:max-w-lg xl:max-w-xl h-[400px] md:h-[500px] relative md:translate-x-15 lg:translate-x-30">
+				<div className="flex-1 w-full max-w-lg lg:max-w-lg xl:max-w-xl h-[450px] sm:h-[500px] md:h-[500px] relative md:translate-x-15 lg:translate-x-30">
 					<ErrorBoundary
 						fallback={
 							<div className="w-full h-full flex-center rounded-3xl bg-gradient-to-br from-surface-light to-surface-elevated border border-border overflow-hidden">

@@ -185,14 +185,14 @@ const Experience = () => {
         <div className="experience-timeline mt-16 md:mt-24">
           {experiences.map((exp, index) => (
             <div key={exp.id} className="exp-item">
-              <div className="exp-card-wrapper">
-                {/* LEFT - GlowCard with Review and Image */}
-                <div className="w-full xl:w-5/12">
-                  <GlowCard card={exp} index={index}>
-                    <div className="rounded-lg overflow-hidden">
-                      <img
-                        src={exp.imgPath}
-                        alt={`${exp.company} experience`}
+                <div className="exp-card-wrapper">
+                  {/* LEFT - GlowCard with Review and Image */}
+                  <div className="w-full xl:w-5/12 order-2 xl:order-1">
+                    <GlowCard card={exp} index={index}>
+                      <div className="rounded-lg overflow-hidden">
+                        <img
+                          src={exp.imgPath}
+                          alt={`${exp.company}`}
                         className="w-full h-auto object-cover"
                       />
                     </div>
@@ -200,7 +200,7 @@ const Experience = () => {
                 </div>
 
                 {/* RIGHT - Job Details with timeline */}
-                <div className="w-full xl:w-7/12 flex gap-4 md:gap-6">
+                <div className="w-full xl:w-7/12 flex gap-4 md:gap-6 order-1 xl:order-2">
                   {/* Timeline container - logo circle + line */}
                   <div className="timeline-container">
                     {/* Logo with SVG circle border for draw animation */}

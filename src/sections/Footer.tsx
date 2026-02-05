@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Social Links */}
-        <div className="socials ml-100">
+        <div className="socials md:ml-100 sm:ml-10">
           {socialImgs.map((social) => (
             <a
               key={social.name}

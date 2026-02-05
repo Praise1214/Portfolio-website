@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+    <style>
+      :root { color-scheme: light; }
+      html, body { height: 100%; margin: 0; }
+      body {
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        background: #0b0f14;
+        color: #e6eef8;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        background: rgba(13, 18, 26, 0.95);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .bar a { color: #7dd3fc; text-decoration: none; font-weight: 600; }
+      .bar a:hover { text-decoration: underline; }
+      .frame {
+        width: 100%;
+        height: calc(100% - 52px);
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <div>Resume</div>
+      <a href="/" target="_blank">Back to site</a>
+    </div>
+    <iframe class="frame" src="/resume.pdf" title="Resume"></iframe>
+  </body>
+</html>

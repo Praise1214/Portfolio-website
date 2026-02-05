@@ -61,7 +61,7 @@ const CounterItem: React.FC<CounterItemProps> = ({ value, suffix, label, index }
   return (
     <div
       ref={itemRef}
-      className="group relative p-8 min-h-[150px] rounded-2xl bg-surface-light/50 border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden"
+      className="group relative p-3 sm:p-5 md:p-8 min-h-[120px] sm:min-h-[140px] rounded-2xl bg-surface-light/50 border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden"
     >
       {/* Hover glow effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -69,14 +69,16 @@ const CounterItem: React.FC<CounterItemProps> = ({ value, suffix, label, index }
       {/* Content */}
       <div className="relative z-10">
         <div className="flex items-baseline">
-          <span className="text-5xl md:text-5xl font-bold text-gradient">
+          <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient">
             {displayValue}
           </span>
-          <span className="text-3xl md:text-5xl font-bold text-primary">
+          <span className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary">
             {suffix}
           </span>
         </div>
-        <p className="text-text-secondary text-base md:text-lg mt-3">{label}</p>
+        <p className="text-text-secondary text-xs sm:text-sm md:text-lg mt-2 sm:mt-3 leading-tight">
+          {label}
+        </p>
       </div>
 
       {/* Bottom accent line */}
@@ -115,8 +117,8 @@ const AnimatedCounter: React.FC = () => {
   }, []);
 
   return (
-    <div id="counter" ref={containerRef} className="w-full mt-12 md:mt-20 px-5 md:px-30">
-      <div className="w-full grid grid-cols-4 gap-8">
+    <div id="counter" ref={containerRef} className="w-full mt-12 md:mt-20 px-4 sm:px-5 md:px-30">
+      <div className="w-full grid grid-cols-4 gap-3 sm:gap-5 md:gap-8">
         {counterItems.map((item, index) => (
           <div key={index} className="counter-item">
             <CounterItem
