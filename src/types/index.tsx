@@ -16,3 +16,9 @@ export interface TechStackIcon {
   scale: number;
   rotation: [number, number, number];
 }
+
+export interface SocialImg {
+  name: string;
+  imgPath: string;
+  url?: string;
+}

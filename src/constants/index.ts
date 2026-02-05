@@ -1,5 +1,6 @@
 import type {
   NavLink,
+  SocialImg,
 } from "../types"
 
 export const navLinks: NavLink[] = [
@@ -34,4 +35,23 @@ export const profileInfo = {
   linkedin: "https://www.linkedin.com/in/praise-daniels-61441419a",
   resumeUrl: "/resume.pdf",
 };
+
+//Social Media
+export const socialImgs: SocialImg[] = [
+  {
+    name: "github",
+    imgPath: "/images/social/github.svg",
+    url: "https://github.com/Praise1214",
+  },
+  {
+    name: "linkedin",
+    imgPath: "/images/social/linkedin.svg",
+    url: "https://www.linkedin.com/in/praise-daniels-61441419a",
+  },
+  {
+    name: "x",
+    imgPath: "/images/social/x.svg",
+    url: "https://x.com/T1CT4CK",
+  },
+];
 

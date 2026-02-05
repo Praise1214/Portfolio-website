@@ -6,6 +6,7 @@ import FeatureCards from "./sections/FeatureCard";
 import Experience from "./sections/Experience";
 import TechStack from "./sections/TechStack";
 import Contact from "./sections/Contact";
+import Footer from "./sections/Footer";
 // Lazy load sections for better performance
 const ShowcaseSection = lazy(() => import("./sections/ShowcaseSection"));
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
       <Experience />
       <TechStack />
       <Contact />
+      <Footer />
     </Suspense>
     </>
   );
