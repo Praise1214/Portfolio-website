@@ -65,7 +65,7 @@ const Hero = () => {
 	})
 
 	return (
-		<section id="hero" className="relative overflow-hidden bg-grid-pattern min-h-screen">
+		<section id="hero" className="relative overflow-hidden bg-grid-pattern min-h-[80svh] md:min-h-screen">
 
 			<div className="absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
 			{/* Decorative blurs */}
@@ -127,7 +127,7 @@ const Hero = () => {
 				</div>
 
 				{/* Right - 3D Photo Gallery */}
-				<div className="flex-1 w-full max-w-lg lg:max-w-lg xl:max-w-xl h-[450px] sm:h-[500px] md:h-[500px] relative md:translate-x-15 lg:translate-x-30">
+				<div className="flex-1 w-full max-w-lg lg:max-w-lg xl:max-w-xl h-[320px] sm:h-[380px] md:h-[500px] relative md:translate-x-15 lg:translate-x-30">
 					<ErrorBoundary
 						fallback={
 							<div className="w-full h-full flex-center rounded-3xl bg-gradient-to-br from-surface-light to-surface-elevated border border-border overflow-hidden">
