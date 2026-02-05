@@ -14,7 +14,7 @@ interface GlowCardProps {
   children: ReactNode;
 }
 
-const GlowCard = ({ card, index, children }: GlowCardProps) => {
+const GlowCard = ({ card, index}: GlowCardProps) => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleMouseMove =
