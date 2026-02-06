@@ -1,14 +1,15 @@
 
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import TitleHeader from "../components/TitleHeader";
 import ErrorBoundary from "../components/ErrorBoundary";
+import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
 import type { TechStackIcon } from "../types";
-import { useInView } from "../hooks/useInView";
  
-const TechIconCardExperience = lazy(
-  () => import("../components/models/tech_logos/TechIconCardExperience")
-);
+gsap.registerPlugin(ScrollTrigger);
  
 const techStackIcons: TechStackIcon[] = [
   {
@@ -50,54 +51,29 @@ const techStackIcons: TechStackIcon[] = [
 ];
  
 const TechStack: React.FC = () => {
-  const { ref, inView } = useInView<HTMLDivElement>("200px");
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  useEffect(() => {
-    if (!inView || hasAnimated) return;
-    let isMounted = true;
-    let ctx: { revert?: () => void } | null = null;
-
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
-      ([gsapMod, scrollTriggerMod]) => {
-        if (!isMounted) return;
-        const gsap = gsapMod.default ?? gsapMod;
-        const ScrollTrigger = scrollTriggerMod.ScrollTrigger ?? scrollTriggerMod.default;
-        gsap.registerPlugin(ScrollTrigger);
-
-        ctx = gsap.context(() => {
-          gsap.fromTo(
-            ".tech-card",
-            {
-              y: 50,
-              opacity: 0,
-            },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 1,
-              ease: "power2.inOut",
-              stagger: 0.15,
-              scrollTrigger: {
-                trigger: "#skills",
-                start: "top center",
-              },
-            }
-          );
-        });
-        setHasAnimated(true);
+  useGSAP(() => {
+    gsap.fromTo(
+      ".tech-card",
+      {
+        y: 50,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.inOut",
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top center",
+        },
       }
     );
-
-    return () => {
-      isMounted = false;
-      ctx?.revert?.();
-    };
-  }, [hasAnimated, inView]);
+  });
  
   return (
     <section
-      ref={ref}
       id="skills"
       className="flex-center section-padding mt-2 md:mt-12 mb-70"
       aria-label="Technical Skills"
@@ -116,23 +92,15 @@ const TechStack: React.FC = () => {
               <div className="tech-card-animated-bg" />
               <div className="tech-card-content">
                 <div className="tech-icon-wrapper">
-                  {inView ? (
-                    <ErrorBoundary
-                      fallback={
-                        <div className="w-full h-full flex-center">
-                          <div className="text-4xl">⚡</div>
-                        </div>
-                      }
-                    >
-                      <Suspense fallback={null}>
-                        <TechIconCardExperience model={icon} />
-                      </Suspense>
-                    </ErrorBoundary>
-                  ) : (
-                    <div className="w-full h-full flex-center">
-                      <div className="text-4xl">⚡</div>
-                    </div>
-                  )}
+                  <ErrorBoundary
+                    fallback={
+                      <div className="w-full h-full flex-center">
+                        <div className="text-4xl">⚡</div>
+                      </div>
+                    }
+                  >
+                    <TechIconCardExperience model={icon} />
+                  </ErrorBoundary>
                 </div>
                 <div className="padding-x w-full">
                   <p>{icon.name}</p>
