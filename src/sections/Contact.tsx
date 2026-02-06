@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 
 import TitleHeader from "../components/TitleHeader";
-import ContactExperience from "../components/models/contact/ContactExperience";
+import { useInView } from "../hooks/useInView";
+
+const ContactExperience = lazy(
+  () => import("../components/models/contact/ContactExperience")
+);
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +15,7 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const { ref, inView } = useInView<HTMLDivElement>("200px");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -120,9 +125,23 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="xl:col-span-7 min-h-96">
+          <div ref={ref} className="xl:col-span-7 min-h-96">
             <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <ContactExperience />
+              {inView ? (
+                <Suspense
+                  fallback={
+                    <div className="w-full h-full flex-center text-surface text-lg">
+                      Loading...
+                    </div>
+                  }
+                >
+                  <ContactExperience />
+                </Suspense>
+              ) : (
+                <div className="w-full h-full flex-center text-surface text-lg">
+                  Loading...
+                </div>
+              )}
             </div>
           </div>
         </div>

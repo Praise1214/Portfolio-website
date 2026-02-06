@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { profileInfo } from "../constants";
 import Button from "@/components/Button";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import HeroExperience from "@/components/models/hero_models/HeroExperience";
+const HeroExperience = lazy(
+	() => import("@/components/models/hero_models/HeroExperience")
+);
 import AnimatedCounter from "@/components/AnimatedCounter";
 const roles = [
 	"FullStack Developer",
@@ -24,6 +24,7 @@ const Hero = () => {
 
 	const [currentRole, setCurrentRole] = useState(0);
 	const [isResetting, setIsResetting] = useState<boolean>(false);
+	const [show3d, setShow3d] = useState(false);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -58,11 +59,60 @@ const Hero = () => {
 		return () => cancelAnimationFrame(id);
 	}, [isResetting])
 
-	useGSAP(() => {
-		gsap.fromTo(".hero-animate",
-			{ y: 40, opacity: 0 },
-			{ y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: "power3.out" })
-	})
+	useEffect(() => {
+		const idleWindow = window as Window & {
+			requestIdleCallback?: (cb: () => void, options?: { timeout: number }) => number;
+			cancelIdleCallback?: (id: number) => void;
+		};
+
+		if (idleWindow.requestIdleCallback) {
+			const idleId = idleWindow.requestIdleCallback(
+				() => setShow3d(true),
+				{ timeout: 1500 }
+			);
+			return () => idleWindow.cancelIdleCallback?.(idleId);
+		}
+
+		const timeoutId = window.setTimeout(() => setShow3d(true), 1200);
+		return () => window.clearTimeout(timeoutId);
+	}, []);
+
+	const heroFallback = (
+		<div className="w-full h-full flex-center rounded-3xl bg-gradient-to-br from-surface-light to-surface-elevated border border-border overflow-hidden">
+			<div className="relative">
+				<img
+					src="/images/profile-professional.jpg"
+					alt="Praise Daniels"
+					className="w-48 h-60 object-cover rounded-xl border-2 border-primary shadow-2xl"
+				/>
+				<div className="absolute -bottom-2 -right-2 w-12 h-12 bg-primary rounded-full flex-center text-surface text-xl">
+					👨‍💻
+				</div>
+			</div>
+		</div>
+	);
+
+	useEffect(() => {
+		let isMounted = true;
+		let ctx: { revert?: () => void } | null = null;
+
+		import("gsap").then((mod) => {
+			if (!isMounted) return;
+			const gsap = mod.default ?? mod;
+			ctx = gsap.context(() => {
+				gsap.fromTo(
+					".hero-animate",
+					{ y: 40, opacity: 0 },
+					{ y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: "power3.out" }
+				);
+			});
+		});
+
+		return () => {
+			isMounted = false;
+			ctx?.revert?.();
+		};
+	}, []);
 
 	return (
 		<section id="hero" className="relative overflow-hidden bg-grid-pattern min-h-[80svh] md:min-h-screen">
@@ -129,22 +179,15 @@ const Hero = () => {
 				{/* Right - 3D Photo Gallery */}
 				<div className="flex-1 w-full max-w-lg lg:max-w-lg xl:max-w-xl h-[320px] sm:h-[380px] md:h-[500px] relative md:translate-x-15 lg:translate-x-30">
 					<ErrorBoundary
-						fallback={
-							<div className="w-full h-full flex-center rounded-3xl bg-gradient-to-br from-surface-light to-surface-elevated border border-border overflow-hidden">
-								<div className="relative">
-									<img
-										src="/images/profile-professional.jpg"
-										alt="Praise Daniels"
-										className="w-48 h-60 object-cover rounded-xl border-2 border-primary shadow-2xl"
-									/>
-									<div className="absolute -bottom-2 -right-2 w-12 h-12 bg-primary rounded-full flex-center text-surface text-xl">
-										👨‍💻
-									</div>
-								</div>
-							</div>
-						}
+						fallback={heroFallback}
 					>
-						<HeroExperience />
+						{show3d ? (
+							<Suspense fallback={heroFallback}>
+								<HeroExperience />
+							</Suspense>
+						) : (
+							heroFallback
+						)}
 					</ErrorBoundary>
 				</div>
 
