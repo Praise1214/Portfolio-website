@@ -2,8 +2,10 @@ import React, { useState } from "react";
 
 import TitleHeader from "../components/TitleHeader";
 import ContactExperience from "../components/models/contact/ContactExperience";
+import useInView from "../hooks/useInView";
 
 const Contact = () => {
+  const { ref: canvasRef, inView: canvasInView } = useInView();
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
@@ -120,9 +122,9 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="xl:col-span-7 min-h-96">
+          <div className="xl:col-span-7 min-h-96" ref={canvasRef}>
             <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <ContactExperience />
+              {canvasInView ? <ContactExperience /> : null}
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TitleHeader from "../components/TitleHeader";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
+import useInView from "../hooks/useInView";
 import type { TechStackIcon } from "../types";
  
 gsap.registerPlugin(ScrollTrigger);
@@ -50,6 +51,30 @@ const techStackIcons: TechStackIcon[] = [
   },
 ];
  
+const LazyTechCard: React.FC<{ icon: TechStackIcon }> = ({ icon }) => {
+  const { ref, inView } = useInView();
+
+  return (
+    <div ref={ref} className="tech-icon-wrapper">
+      {inView ? (
+        <ErrorBoundary
+          fallback={
+            <div className="w-full h-full flex-center">
+              <div className="text-4xl">⚡</div>
+            </div>
+          }
+        >
+          <TechIconCardExperience model={icon} />
+        </ErrorBoundary>
+      ) : (
+        <div className="w-full h-full flex-center">
+          <div className="text-4xl animate-pulse">⚡</div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const TechStack: React.FC = () => {
   useGSAP(() => {
     gsap.fromTo(
@@ -91,17 +116,7 @@ const TechStack: React.FC = () => {
             >
               <div className="tech-card-animated-bg" />
               <div className="tech-card-content">
-                <div className="tech-icon-wrapper">
-                  <ErrorBoundary
-                    fallback={
-                      <div className="w-full h-full flex-center">
-                        <div className="text-4xl">⚡</div>
-                      </div>
-                    }
-                  >
-                    <TechIconCardExperience model={icon} />
-                  </ErrorBoundary>
-                </div>
+                <LazyTechCard icon={icon} />
                 <div className="padding-x w-full">
                   <p>{icon.name}</p>
                 </div>

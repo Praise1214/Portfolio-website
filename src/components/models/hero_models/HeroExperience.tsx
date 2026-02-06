@@ -8,8 +8,8 @@ const RotatingPhotoFrame: React.FC = () => {
   const frameMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
   
   const [frontTexture, backTexture] = useTexture([
-    "/images/profile-professional.jpg",
-    "/images/profile-dev.png",
+    "/images/profile-professional.webp",
+    "/images/profile-dev.webp",
   ]);
 
   useEffect(() => {
@@ -144,7 +144,7 @@ const HeroExperience: React.FC = () => {
     return (
       <div className="w-full h-full flex-center">
         <img 
-          src="/images/profile-professional.jpg" 
+          src="/images/profile-professional.webp"
           alt="Praise Daniels"
           className="w-48 h-60 object-cover rounded-xl border-2 border-primary shadow-2xl"
         />
@@ -157,7 +157,7 @@ const HeroExperience: React.FC = () => {
       className="w-full h-full"
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0); // Fully transparent background
         gl.domElement.addEventListener("webglcontextlost", (e) => {

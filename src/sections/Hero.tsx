@@ -133,7 +133,7 @@ const Hero = () => {
 							<div className="w-full h-full flex-center rounded-3xl bg-gradient-to-br from-surface-light to-surface-elevated border border-border overflow-hidden">
 								<div className="relative">
 									<img
-										src="/images/profile-professional.jpg"
+										src="/images/profile-professional.webp"
 										alt="Praise Daniels"
 										className="w-48 h-60 object-cover rounded-xl border-2 border-primary shadow-2xl"
 									/>

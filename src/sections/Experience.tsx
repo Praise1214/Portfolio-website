@@ -14,7 +14,7 @@ const experiences = [
     role: "Product Lead",
     date: "Jan 2025 - Present",
     location: "Lagos, NG",
-    logo: "/images/logo-tranxcarbon.jpg",
+    logo: "/images/logo-tranxcarbon.webp",
     imgPath: "/images/exp1.png",
     review:
       "Praise has been instrumental in building our carbon credit marketplace from the ground up. His technical expertise combined with product vision helped us launch Tranxcarbon 1.0 successfully. A true leader who delivers results.",

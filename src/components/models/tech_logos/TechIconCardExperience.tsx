@@ -160,7 +160,7 @@ const TechIconCardExperience: React.FC<TechIconCardExperienceProps> = ({ model }
         powerPreference: "high-performance",
         failIfMajorPerformanceCaveat: false,
       }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       onCreated={({ gl }) => {
         gl.domElement.addEventListener("webglcontextlost", (e) => {
           e.preventDefault();

@@ -12,7 +12,7 @@ const projects = [
     subtitle: "Carbon Credit Marketplace",
     description:
       "A digital platform for purchasing CO2 offsets and creating official carbon offset certificates.",
-    image: "/images/project-tranxcarbon.png",
+    image: "/images/project-tranxcarbon.webp",
     tags: ["React", "Node.js", "PostgreSQL", "ExpressJs"],
     link: "https://www.tranxcarbon.com/",
   },
@@ -22,7 +22,7 @@ const projects = [
     subtitle: "Cocktail Experience",
     description:
       "An elegant cocktail menu website with stunning visuals and smooth animations.",
-    image: "/images/project-velvetpour.png",
+    image: "/images/project-velvetpour.webp",
     tags: ["React", "GSAP", "Tailwind"],
     link: "https://cocktail-gsap-landing.vercel.app/",
   },
@@ -32,7 +32,7 @@ const projects = [
     subtitle: "E-commerce Website",
     description:
       "Automated product data extraction tool for market research and price monitoring.",
-    image: "/images/project-amazon.png",
+    image: "/images/project-amazon.webp",
     tags: ["Javascript", "Node.js", "Automation"],
     link: "https://javascript-amazon-project-sage.vercel.app",
   },
@@ -42,7 +42,7 @@ const projects = [
     subtitle: "Career Platform",
     description:
       "A modern job listing platform connecting employers with talented candidates.",
-    image: "/images/project-jobboard.png",
+    image: "/images/project-jobboard.webp",
     tags: ["NextJs", "TypeScript", "PostgreSQL", "Prisma"],
     link: "https://job-posting-website-429g.vercel.app/",
   },
@@ -105,6 +105,8 @@ const ShowcaseSection = () => {
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
 
