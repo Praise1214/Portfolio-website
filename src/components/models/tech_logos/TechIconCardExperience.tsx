@@ -60,10 +60,11 @@ const LogoMesh: React.FC<LogoMeshProps> = ({ url }) => {
     );
   }, [url]);
  
-  // Gentle rotation
-  useFrame(({ clock }) => {
+  // Gentle rotation — invalidate to trigger render in demand mode
+  useFrame(({ clock, invalidate }) => {
     if (meshRef.current) {
       meshRef.current.rotation.y = Math.sin(clock.getElapsedTime() * 0.5) * 0.3;
+      invalidate();
     }
   });
  
@@ -92,9 +93,10 @@ const LogoMesh: React.FC<LogoMeshProps> = ({ url }) => {
 const LoadingFallback: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
  
-  useFrame(({ clock }) => {
+  useFrame(({ clock, invalidate }) => {
     if (meshRef.current) {
       meshRef.current.rotation.z = clock.getElapsedTime() * 2;
+      invalidate();
     }
   });
  
@@ -155,12 +157,13 @@ const TechIconCardExperience: React.FC<TechIconCardExperienceProps> = ({ model }
       className="w-full h-full"
       camera={{ position: [0, 0, 4], fov: 50 }}
       gl={{
-        antialias: true,
+        antialias: false,
         alpha: true,
         powerPreference: "high-performance",
         failIfMajorPerformanceCaveat: false,
       }}
-      dpr={[1, 1.5]}
+      dpr={window.innerWidth < 768 ? 1 : [1, 1.5]}
+      frameloop="demand"
       onCreated={({ gl }) => {
         gl.domElement.addEventListener("webglcontextlost", (e) => {
           e.preventDefault();
@@ -170,7 +173,7 @@ const TechIconCardExperience: React.FC<TechIconCardExperienceProps> = ({ model }
     >
       <ambientLight intensity={1} />
       <directionalLight position={[5, 5, 5]} intensity={0.5} />
- 
+
       <Suspense fallback={<LoadingFallback />}>
         <TechModel name={model.name} />
       </Suspense>

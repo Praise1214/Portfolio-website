@@ -24,9 +24,10 @@ const RotatingPhotoFrame: React.FC = () => {
   }, [frontTexture, backTexture]);
 
   // Rotation + dynamic frame color
-  useFrame(() => {
+  useFrame(({ invalidate }) => {
     if (frameRef.current && frameMaterialRef.current) {
       frameRef.current.rotation.y += 0.005;
+      invalidate();
 
       // Get rotation to determine which side is facing front
       const rotation = frameRef.current.rotation.y % (Math.PI * 2);
@@ -88,9 +89,10 @@ const PhotoFrameWithSuspense: React.FC = () => {
 const LoadingPlaceholder: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   
-  useFrame(() => {
+  useFrame(({ invalidate }) => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01;
+      invalidate();
     }
   });
 
@@ -155,9 +157,10 @@ const HeroExperience: React.FC = () => {
   return (
     <Canvas
       className="w-full h-full"
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      gl={{ antialias: window.innerWidth >= 768, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
-      dpr={[1, 1.5]}
+      dpr={window.innerWidth < 768 ? 1 : [1, 1.5]}
+      frameloop="demand"
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0); // Fully transparent background
         gl.domElement.addEventListener("webglcontextlost", (e) => {

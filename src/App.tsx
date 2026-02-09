@@ -1,14 +1,16 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import Hero from "./sections/Hero";
 import Navbar from "./components/NavBar";
 import LoadingSpinner from "./components/LoadingSpinner";
-import FeatureCards from "./sections/FeatureCard";
-import Experience from "./sections/Experience";
-import TechStack from "./sections/TechStack";
-import Contact from "./sections/Contact";
-import Footer from "./sections/Footer";
-// Lazy load sections for better performance
+
+// Lazy load ALL heavy sections — this lets React render the page shell
+// immediately while Three.js + GSAP chunks download in parallel
+const Hero = lazy(() => import("./sections/Hero"));
 const ShowcaseSection = lazy(() => import("./sections/ShowcaseSection"));
+const FeatureCards = lazy(() => import("./sections/FeatureCard"));
+const Experience = lazy(() => import("./sections/Experience"));
+const TechStack = lazy(() => import("./sections/TechStack"));
+const Contact = lazy(() => import("./sections/Contact"));
+const Footer = lazy(() => import("./sections/Footer"));
 
 const App = () => {
   const [ready, setReady] = useState(false);
@@ -30,11 +32,9 @@ const App = () => {
     });
 
     loaded.then(() => {
-      // Signal the preloader script to go to 100%
       if ((window as unknown as Record<string, () => void>).__preloaderDone) {
         (window as unknown as Record<string, () => void>).__preloaderDone();
       }
-      // Wait for bar animation to finish before dismissing
       setTimeout(dismiss, 600);
     });
   }, []);
@@ -42,13 +42,25 @@ const App = () => {
   return (
     <div style={{ opacity: ready ? 1 : 0, transition: "opacity 0.4s ease" }}>
       <Navbar />
-      <Hero />
+      <Suspense fallback={<LoadingSpinner />}>
+        <Hero />
+      </Suspense>
       <Suspense fallback={<LoadingSpinner />}>
         <ShowcaseSection />
+      </Suspense>
+      <Suspense fallback={null}>
         <FeatureCards />
+      </Suspense>
+      <Suspense fallback={null}>
         <Experience />
+      </Suspense>
+      <Suspense fallback={null}>
         <TechStack />
+      </Suspense>
+      <Suspense fallback={null}>
         <Contact />
+      </Suspense>
+      <Suspense fallback={null}>
         <Footer />
       </Suspense>
     </div>

@@ -10,8 +10,9 @@ const ContactExperience = () => {
       className="w-full h-full"
       shadows
       camera={{ position: [0, 3, 7], fov: 45 }}
-      dpr={[1, 1.5]}
-      gl={{ antialias: true, powerPreference: "high-performance" }}
+      dpr={window.innerWidth < 768 ? 1 : [1, 1.5]}
+      frameloop="demand"
+      gl={{ antialias: window.innerWidth >= 768, powerPreference: "high-performance" }}
     >
       <ambientLight intensity={0.5} color="#fff4e6" />
 
