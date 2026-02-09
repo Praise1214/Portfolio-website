@@ -66,14 +66,14 @@ const Experience = () => {
       // Animate GlowCards from left
       gsap.utils.toArray<HTMLElement>(".timeline-card").forEach((card) => {
         gsap.from(card, {
-          xPercent: -100,
+          xPercent: -90,
           opacity: 0,
           transformOrigin: "left left",
           duration: 1,
           ease: "power2.inOut",
           scrollTrigger: {
             trigger: card,
-            start: "top 80%",
+            start: "top 92%",
           },
         });
       });

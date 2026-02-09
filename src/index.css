@@ -414,6 +414,12 @@ section {
     z-index: 5; /* Behind the logo circles */
   }
 
+  @media (max-width: 767px) {
+    .timeline-line {
+      display: none;
+    }
+  }
+
   @media (min-width: 768px) {
     .timeline-line {
       height: calc(100% + 4rem - 56px);

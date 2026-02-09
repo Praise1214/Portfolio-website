@@ -77,7 +77,7 @@ const Hero = () => {
 				{/* Left Content */}
 				<div className="flex-1 max-w-2xl lg:max-w-lg xl:max-w-xl lg:-ml-20">
 					<div className="hero-animate">
-						<div className="hero-badge relative -top-6">
+						<div className="hero-badge relative -top-1 md:-top-6 mb-4 md:mb-0">
 							<span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
 							<span>Available for opportunities</span>
 						</div>
