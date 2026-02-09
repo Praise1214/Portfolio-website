@@ -33,6 +33,97 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
+    <!-- Preloader - removed by React once app is ready -->
+    <div id="preloader" style="
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: #0a0a0a;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    ">
+      <!-- Name -->
+      <p style="
+        color: #fafafa;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      ">Praise Daniels</p>
+
+      <!-- Progress bar track -->
+      <div style="
+        width: 220px;
+        height: 3px;
+        background: #262626;
+        border-radius: 4px;
+        overflow: hidden;
+      ">
+        <div id="preloader-bar" style="
+          width: 0%;
+          height: 100%;
+          background: #10b981;
+          border-radius: 4px;
+          transition: width 0.3s ease;
+        "></div>
+      </div>
+
+      <!-- Percentage -->
+      <p id="preloader-percent" style="
+        color: #a3a3a3;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        font-variant-numeric: tabular-nums;
+      ">0%</p>
+    </div>
+
+    <script>
+      (function() {
+        var bar = document.getElementById('preloader-bar');
+        var pct = document.getElementById('preloader-percent');
+        var progress = 0;
+        var target = 0;
+
+        // Simulate progress: quickly to 30, slow to 70, then wait for real load
+        function tick() {
+          if (target <= 90) {
+            // Ease toward target
+            progress += (target - progress) * 0.08;
+          } else {
+            progress += (target - progress) * 0.15;
+          }
+
+          var rounded = Math.min(Math.round(progress), 100);
+          if (bar) bar.style.width = rounded + '%';
+          if (pct) pct.textContent = rounded + '%';
+
+          if (rounded < 100) {
+            requestAnimationFrame(tick);
+          }
+        }
+
+        // Ramp target over time
+        setTimeout(function() { target = 30; }, 100);
+        setTimeout(function() { target = 55; }, 400);
+        setTimeout(function() { target = 70; }, 800);
+        setTimeout(function() { target = 85; }, 1500);
+
+        // When page fully loads, go to 100
+        window.addEventListener('load', function() {
+          target = 100;
+        });
+
+        // Expose for React to force-complete
+        window.__preloaderDone = function() { target = 100; };
+
+        requestAnimationFrame(tick);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
